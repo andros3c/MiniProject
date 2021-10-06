@@ -94,20 +94,20 @@ console.log(id)
   console.log( mejat)
   console.log( props.tgl_booking)
   
-  for(let i=0;i<mejat.length;i++){
- addbooking({
-   variables:{
-    " booking_id": uuidv4(), 
-    "id_user": uuidv4(), 
-    "jam_booking": props.jam_booking,
-    " jlh_org": props.jlh_org,
-    " konfirmasi": false, 
-    "nomor_meja": mejat[i], 
-    "tgl_booking": props.tgl_booking
-   }
+//   for(let i=0;i<mejat.length;i++){
+//  addbooking({
+//    variables:{
+//     " booking_id": uuidv4(), 
+//     "id_user": uuidv4(), 
+//     "jam_booking": props.jam_booking,
+//     " jlh_org": props.jlh_org,
+//     " konfirmasi": false, 
+//     "nomor_meja": mejat[i], 
+//     "tgl_booking": props.tgl_booking
+//    }
   
- })
-}
+//  })
+// }
 
 }
 
