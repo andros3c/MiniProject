@@ -17,22 +17,21 @@ import { Component, useState } from "react";
 
 const Menu = () => {
   const sub_menu = gql`
-  subscription MySubscription($kategori: String_comparison_exp = {}) {
-    menu(where: {kategori: $kategori}) {
-      foto
-      harga
-      id_menu
-      kategori
-      nama
-      ready_status
-      waktu_tunggu
+    subscription MySubscription($kategori: String_comparison_exp = {}) {
+      menu(where: { kategori: $kategori }) {
+        foto
+        harga
+        id_menu
+        kategori
+        nama
+        ready_status
+        waktu_tunggu
+      }
     }
-  }
-  
   `;
-  const[menu,setMenu]=useState();
-  const { data, loading } = useSubscription(sub_menu,{variables: {kategori: {_eq:menu }},
-    
+  const [menu, setMenu] = useState();
+  const { data, loading } = useSubscription(sub_menu, {
+    variables: { kategori: { _eq: menu } },
   });
   console.log(data);
 
@@ -58,38 +57,32 @@ const Menu = () => {
 
   const [value, setValue] = React.useState(0);
   const handleChange = (e, newValue) => {
-    if(e.target.name=="Appetizers"){
+    if (e.target.name == "Appetizers") {
       setMenu("appetizers");
-    } else if(e.target.name=="Soup"){
+    } else if (e.target.name == "Soup") {
       setMenu("soup");
-    }
-    else if(e.target.name=="Main"){
+    } else if (e.target.name == "Main") {
       setMenu("main");
-    }
-    else if(e.target.name=="Dessert"){
+    } else if (e.target.name == "Dessert") {
       setMenu("dessert");
-    }
-    else if(e.target.name=="Beverage"){
+    } else if (e.target.name == "Beverage") {
       setMenu("beverage");
-    }
-    else{
-      setMenu()
+    } else {
+      setMenu();
     }
     setValue(newValue);
-  
   };
 
   const getId = (e) => {
     console.log(e.target.id);
   };
 
-  const pecahurl=(foto)=>{
-    const a = foto.split('/d/')[1];
-    const b = a.split('/view')[0];
-   
-return("https://drive.google.com/uc?export=view&id="+b)
+  const pecahurl = (foto) => {
+    const a = foto.split("/d/")[1];
+    const b = a.split("/view")[0];
 
-  }
+    return "https://drive.google.com/uc?export=view&id=" + b;
+  };
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ bgcolor: "secondary.main" }}>
@@ -103,12 +96,12 @@ return("https://drive.google.com/uc?export=view&id="+b)
             sx={{ bgcolor: "secondary.main" }}
             centered
           >
-            <Tab label="All Foods and Drinks" name = "all" />
-            <Tab label="Appetizers" name = "Appetizers"  />
-            <Tab label="Soup" name = "Soup" />
-            <Tab label="Main" name = "Main"  />
-            <Tab label="Dessert" name = "Dessert"  />
-            <Tab label="Beverage" name = "Beverage"  />
+            <Tab label="All Foods and Drinks" name="all" />
+            <Tab label="Appetizers" name="Appetizers" />
+            <Tab label="Soup" name="Soup" />
+            <Tab label="Main" name="Main" />
+            <Tab label="Dessert" name="Dessert" />
+            <Tab label="Beverage" name="Beverage" />
           </Tabs>
         </Box>
         <br />
@@ -125,60 +118,60 @@ return("https://drive.google.com/uc?export=view&id="+b)
               }}
             >
               {loading ? (
-          <p>Loading...</p>
-        ) : data?.menu.map((v) => (
-                <Grid
-                  item
-                  xs={3.5}
-                  sx={{ display: "flex", justifyContent: "center" }}
-                >
-                  <Card sx={{ width: 85 + "%" }}>
-                    <CardContent>
-                      <CardMedia
-                        component="img"
-                        height="194"
-                        image={pecahurl(v.foto)}
-                        alt={v.nama}
-                      />
-                      <Typography variant="h5" component="div">
-                        {v.nama}
-                      </Typography>
-                      <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                        {v.kategori}
-                      </Typography>
-                      <Typography variant="h6">
-                        Rp{bull}
-                        {v.harga}
-                        <Typography variant="subtitle1" component="h4">
-                          Estimated Serving Time
+                <p>Loading...</p>
+              ) : (
+                data?.menu.map((v) => (
+                  <Grid
+                    item
+                    xs={3.5}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <Card sx={{ width: 85 + "%" }}>
+                      <CardContent>
+                        <CardMedia
+                          component="img"
+                          height="194"
+                          image={pecahurl(v.foto)}
+                          alt={v.nama}
+                        />
+                        <Typography variant="h5" component="div">
+                          {v.nama}
                         </Typography>
-                        <Typography variant="h6" component="h4">
-                          {v.waktu_tunggu}
+                        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                          {v.kategori}
                         </Typography>
-                      </Typography>
-                    </CardContent>
-                    <CardActions
-                      sx={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <Button
-                        id={v.id_menu}
-                        onClick={getId}
-                        variant="contained"
-                        color="secondary"
-                        disabled
+                        <Typography variant="h6">
+                          Rp{bull}
+                          {v.harga}
+                          <Typography variant="subtitle1" component="h4">
+                            Estimated Serving Time
+                          </Typography>
+                          <Typography variant="h6" component="h4">
+                            {v.waktu_tunggu}
+                          </Typography>
+                        </Typography>
+                      </CardContent>
+                      <CardActions
+                        sx={{ display: "flex", justifyContent: "center" }}
                       >
-                        ORDER
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))}
+                        <Button
+                          id={v.id_menu}
+                          onClick={getId}
+                          variant="contained"
+                          color="secondary"
+                          disabled
+                        >
+                          ORDER
+                        </Button>
+                      </CardActions>
+                    </Card>
+                  </Grid>
+                ))
+              )}
             </Grid>
           </Box>
         </Container>
       </Box>
-
-    
     </ThemeProvider>
   );
 };

@@ -28,6 +28,7 @@ const wsLink = new WebSocketLink({
   uri: "wss://native-ewe-21.hasura.app/v1/graphql",
   options: {
     reconnect: true,
+    timeout: 1000000,
     connectionParams: {
       headers: {
         "content-type": "application/json",
